@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="C:/gst/css/main1.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <script src="C:/gst/node_modules/web3/dist/web3.min.js"></script>
+  <title>Register</title>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="form-wrapper auth login">
+        <form action="" method="post" id="frmBox" enctype="multipart/form-data">
+          <div class="data-group">
+            <label>Name</label>
+            <br>
+            <input type="text" name="name" id="name" class="form-data" placeholder="Enter Name">
+          </div>
+            <div id="error1"></div>
+          <div class="data-group">
+            <label>Email</label>
+            <br>
+            <input type="text" name="email" id="email" class="form-data" placeholder="Enter Email">
+          </div>
+            <div id="error2"></div>
+            
+          <div class="data-group">
+            <label>Password</label>
+            <br>
+            <input type="password" name="password" id="password" class="form-data" placeholder="Enter Password">
+          </div>
+            <div id="error3"></div>
+            <div class="data-group">
+            <label>Confirm Password</label>
+            <br>
+            <input type="password" name="confirm_password" id="cpassword" class="form-data" placeholder="Enter Confirm Password">
+          </div>
+            
+            <div id="error4"></div>
+          <div class="data-group">
+            <button type="submit" name="register-btn" class="btn-block">Register</button>
+          </div>
+        </form>
+        <p >Already have an account!  <a href="login.html" style="color:blue;">Login</a></p>
+        <p>Forget Password <a href="#">Forgot Password</a></p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
+<script>
+    
+        $(document).on('click','.btn-block',function(event)
+        {
+            event.preventDefault();
+            var info=0;
+            var name        =  $('#name').val();
+            var email       =  $('#email').val();
+            var password    =  $('#password').val();
+            var cpassword   =  $('#cpassword').val();
+            
+            if(name=="" || name==null)
+                {
+                    document.getElementById("error1").innerHTML="Name can't be empty";
+                    $("#error1").fadeOut(2000);
+                    $("#error1").css({"padding-left":"10px","color":"red"});
+                    info=1;
+                }
+            
+            if(email=="" || email==null)
+                {
+                    document.getElementById("error2").innerHTML="Email can't be empty";
+                    $("#error2").fadeOut(2000);
+                    $("#error2").css({"padding-left":"10px","color":"red"});
+                    info=1;
+                }
+            if(password=="" || password==null)
+                {
+                    document.getElementById("error3").innerHTML="Password can't be empty";
+                    $("#error3").fadeOut(2000);
+                    $("#error3").css({"padding-left":"10px","color":"red"});
+                    info=1;
+                }
+            
+            if(cpassword=="" || cpassword==null)
+                {
+                    document.getElementById("error4").innerHTML="Password not match";
+                    $("#error4").fadeOut(2000);
+                    $("#error4").css({"padding-left":"10px","color":"red"});
+                    info=1;
+                }
+            
+            if(info==0)
+            {
+                
+                if(typeof web3!='undefined')
+                {
+                    web3=new Web3(web3.currentProvider);
+                }
+                else
+                {
+                    web3=new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+                }
+
+                web3.eth.defaultAccount=web3.eth.accounts[0];
+                var bc=web3.eth.contract([
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_email",
+				"type": "string"
+			},
+			{
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"name": "_mobile",
+				"type": "uint256"
+			},
+			{
+				"name": "_gstin",
+				"type": "string"
+			},
+			{
+				"name": "_identity_type",
+				"type": "string"
+			},
+			{
+				"name": "_identity",
+				"type": "string"
+			},
+			{
+				"name": "_business",
+				"type": "string"
+			}
+		],
+		"name": "setAccount",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_bill",
+				"type": "uint256"
+			}
+		],
+		"name": "setBillNo",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_gstin",
+				"type": "string"
+			},
+			{
+				"name": "_billNumber",
+				"type": "string"
+			},
+			{
+				"name": "_amount",
+				"type": "uint256"
+			},
+			{
+				"name": "_business",
+				"type": "string"
+			}
+		],
+		"name": "setDetails",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_email",
+				"type": "string"
+			},
+			{
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"name": "_password",
+				"type": "string"
+			}
+		],
+		"name": "setUser",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_email",
+				"type": "string"
+			}
+		],
+		"name": "getAccount",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_email",
+				"type": "string"
+			},
+			{
+				"name": "_gstin",
+				"type": "string"
+			}
+		],
+		"name": "getAccountExsist",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getBillNo",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_gstin",
+				"type": "string"
+			}
+		],
+		"name": "getDetails",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_email",
+				"type": "string"
+			}
+		],
+		"name": "getEmailExsist",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_email",
+				"type": "string"
+			}
+		],
+		"name": "getProfile",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_email",
+				"type": "string"
+			},
+			{
+				"name": "_password",
+				"type": "string"
+			}
+		],
+		"name": "getUserExsist",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]);
+
+            var c=bc.at("0xD659ADD36bE031701f1f8FF05f4c6b38a4bfC81A");
+            if(c.getEmailExsist(email,{from:web3.eth.accounts[0],gas:1000000}))
+                {
+                    alert("Sorry  Email already associate with an account");
+                }
+            else
+                {
+                    c.setUser(email,name,password,{from:web3.eth.accounts[0],gas:1000000});
+                    alert("Register Successfully");
+                    window.location.href="login.html";
+                }
+                
+            }
+           
+        });
+        
+</script>

@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Profile</title>
+    <link rel="stylesheet" href="C:/gst/css/profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="C:/gst/node_modules/web3/dist/web3.min.js"></script>
+  </head>
+  <body>
+    <div class ="bgimage">
+      
+    <input type="checkbox" id="check">
+    <!--header area start-->
+    <header>
+      <label for="check">
+        <i class="fas fa-bars" id="sidebar_btn"></i>
+      </label>
+      <div class="left_area">
+        <h3> GST <span> BILL </span></h3>
+      </div>
+      <div class="right_area">
+        <a href="logout.html" class="logout_btn">Logout</a>
+      </div>
+    </header>
+    <!--header area end-->
+    <!--sidebar start-->
+    <div class="sidebar">
+      <center>
+        <img src="C:/gst/image/customer.jfif" class="profile_image" alt="">
+        <h4>Customer</h4>
+      </center>
+      <a href="profile.html"><i class="fas fa-desktop"></i><span>Profile</span></a>
+      <a href="account_details.html"><i class="fas fa-th"></i><span>ACCOUNT DETAIL</span></a>
+      <a href="#"><i class="fas fa-info-circle"></i><span>About</span></a>
+
+    </div>
+    <!--sidebar end-->
+
+    <div class="content">
+        <div id="container">
+		<div class="image">
+			<img src="C:/gst/image/profile.png" >
+		</div>
+            <br>
+		<div class="details">
+			<label>Name</label>
+			<br>
+			<p id="name"></p>
+			<label>Email</label>
+			<br>
+			<p id="email"></p>
+			<br>
+			<br>
+			<div class="pswd">
+				<button>Change Password</button>
+			</div>
+		</div>
+	</div>
+        </div>
+      </div>
+  </body>
+</html>
+        
+
+<script>
+    var email=sessionStorage.getItem("email");
+    if(!email)
+        {
+            window.location.href="login.html";
+        }
+                if(typeof web3!='undefined')
+                {
+                    web3=new Web3(web3.currentProvider);
+                }
+                else
+                {
+                    web3=new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+                }
+
+                web3.eth.defaultAccount=web3.eth.accounts[0];
+                var bc=web3.eth.contract([
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_email",
+				"type": "string"
+			},
+			{
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"name": "_mobile",
+				"type": "uint256"
+			},
+			{
+				"name": "_gstin",
+				"type": "string"
+			},
+			{
+				"name": "_identity_type",
+				"type": "string"
+			},
+			{
+				"name": "_identity",
+				"type": "string"
+			},
+			{
+				"name": "_business",
+				"type": "string"
+			}
+		],
+		"name": "setAccount",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_bill",
+				"type": "uint256"
+			}
+		],
+		"name": "setBillNo",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_gstin",
+				"type": "string"
+			},
+			{
+				"name": "_billNumber",
+				"type": "string"
+			},
+			{
+				"name": "_amount",
+				"type": "uint256"
+			},
+			{
+				"name": "_business",
+				"type": "string"
+			}
+		],
+		"name": "setDetails",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_email",
+				"type": "string"
+			},
+			{
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"name": "_password",
+				"type": "string"
+			}
+		],
+		"name": "setUser",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_email",
+				"type": "string"
+			}
+		],
+		"name": "getAccount",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_email",
+				"type": "string"
+			},
+			{
+				"name": "_gstin",
+				"type": "string"
+			}
+		],
+		"name": "getAccountExsist",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getBillNo",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_gstin",
+				"type": "string"
+			}
+		],
+		"name": "getDetails",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_email",
+				"type": "string"
+			}
+		],
+		"name": "getEmailExsist",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_email",
+				"type": "string"
+			}
+		],
+		"name": "getProfile",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_email",
+				"type": "string"
+			},
+			{
+				"name": "_password",
+				"type": "string"
+			}
+		],
+		"name": "getUserExsist",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]);
+
+            var c=bc.at("0xD659ADD36bE031701f1f8FF05f4c6b38a4bfC81A");
+            document.getElementById("name").innerHTML=(c.getProfile(email,{from:web3.eth.accounts[0],gas:1000000})[0]);
+            document.getElementById("email").innerHTML=(c.getProfile(email,{from:web3.eth.accounts[0],gas:1000000})[1]);
+                
+</script>
+

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Homepage</title>
+	<link rel="stylesheet" type="text/css" href="C:/gst/css/style.css">
+    <link rel="stylesheet" type="text/css" href="C:/gst/css/dash.css">
+	<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700%7CPT+Serif:400,700,400italic' rel='stylesheet'>
+	<link href="https://fonts.googleapis.com/css?family=Montserrat|Open+Sans" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+     
+     <div class ="bgimage">
+     	<div class ="menu"> 
+
+     		<div class="leftmenu">
+     			<h4>GST PAY YOUR TAXES </h4>
+     		</div>
+
+     		<div class="rightmenu">
+     			<ul>
+     				<li> HOME </li>
+     				<li> SERVICES
+     					<ul>
+                            <li class="after_login refunds"><a href="account.html">Create Account</a></li>
+     						<li class="after_login refunds" ><a href="searchBill.html">Search Bill</a></li>
+     						<li class="refunds">REFUNDS</li>
+     					</ul>
+     				</li>
+
+     				<li> GST LAW </li>
+					 <li class="after_login"><a href="payBill.html">Pay bills</a></li>
+                    <li class="after_login"><a href="profile.html">Profile</a></li>
+     				<li class="after_login"><a href="logout.html">Logout</a></li>
+     				<li class="before_login"><a href="register.html">Register</a></li>
+     				<li class="before_login"> <a href="login.html">LOGIN </a></li>
+     				<li> ABOUT US </li>
+     				<li> CONTACT </li>
+
+     			</ul>
+     			
+     		</div>
+     		
+     	</div><!-- end of class menu -->
+     	<div class="text">
+     		<h4>NEWS | UPDATES | EVENTS</h4>
+            <button id ="buttonone"> TAXPAYERS</button>
+            <button id ="buttonone"> GST PRACTITIONERS</button>
+     		
+     	</div>
+     	
+        
+     	
+     </div>
+</body>
+</html>
+
+<script>
+	if(!sessionStorage.getItem("email"))
+    {
+        $(".after_login").hide();
+        $(".before_login").show();
+    }
+
+    else
+    {
+        $(".after_login").show();
+        $(".before_login").hide();
+    }
+  </script>

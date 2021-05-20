@@ -1,0 +1,143 @@
+*{
+	margin:0px;
+	padding:0px;	
+}
+.bgimage{
+	background-image: url('C:/gst/image/homepage.jpg');
+	background-size: 100% 110%;
+	width: 100%;
+	height: 100vh;
+}
+
+.menu{
+
+	width: 100%;
+	height: 100px;
+	background-color: rgba(0,0,0,0.5);
+}
+
+.leftmenu{
+	width: 20%;
+	line-height: 100px;
+	float: left;
+/*	background-color: yellow;*/
+}
+
+.leftmenu h4{
+	padding-left: 30px;
+	font-weight: bold;
+	color: white;
+	font-size: 22px;
+	font-family: 'Montserrat', sans-serif;
+}
+
+
+.rightmenu{
+	width:70%;
+	height: 100px;
+	float: right;
+/*	background-color: red; */
+}
+
+.rightmenu ul{
+	float: right;
+	margin-right: 30px;	
+}
+
+.rightmenu ul li {
+	font-family: 'Montserrat', sans-serif;
+	display: inline-block;
+	list-style: none;
+	font-size: 15px;
+	color:white;
+	font-weight: bold;
+	line-height: 100px;
+	margin-left: 10px;
+	text-transform: uppercase;
+
+}
+.refunds
+{
+	padding-left: 220px;
+}
+
+#fisrtlist{
+	color: orange;
+}
+
+.rightmenu ul li:hover{
+	color: orange;
+}
+
+
+.rightmenu ul ul{
+
+	display:none;
+	position: absolute;
+	top: 70px;
+	line-height: 20px !important;
+	color: black;
+
+}
+.rightmenu ul li:hover > ul{
+	display: block;
+
+}
+.rightmenu ul ul li{
+	width: 150px;
+	float: none;
+	display: list-item;
+	position: relative;
+	line-height: 20px !important;
+	left: -230px;
+	color: black;
+}
+.rightmenu ul ul ul li{
+	position: relative;
+	top: -60px;
+	left: 150px;
+}
+
+.text{
+	width: 100%;
+	margin-top: 185px;
+	text-transform: uppercase;
+	text-align: center;
+	color:white;
+}
+.text h4:hover{
+
+	font-size: 14px;
+	font-family: 'Open Sans', sans-serif;
+	color:orange;
+}
+#buttonone{
+	background-color: white;
+	border: none;
+	font-size: 12px;
+	font-weight: bold;
+	text-transform: uppercase;
+	line-height: 40px;
+	width: 150px;
+	font-family: 'Montserrat', sans-serif;
+	margin-top: 25px;
+	border: 3px solid white;
+}
+
+#buttontwo{
+
+	background-color: transparent;
+	border: none;
+	font-family: 'Montserrat', sans-serif;
+	text-transform: uppercase;
+	font-weight: bold;
+	line-height: 40px;
+	border: 3px solid white;
+	width: 150px;
+}
+a
+{
+color: #fff;
+outline: none;
+border: none;	
+}

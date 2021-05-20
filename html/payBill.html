@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="C:/gst/css/main1.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <script src="C:/gst/node_modules/web3/dist/web3.min.js"></script> 
+  <title>Pay Bill</title>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="form-wrapper auth login">
+        <form action="" method="post">
+          <div class="data-group">
+            <label>Amount</label>
+            <br>
+            <input type="text" name="amount" id="amount" class="form-data" placeholder="Enter amount">
+          </div>
+            <div id="error1"></div>
+          <div class="data-group">
+          <label>GST Number</label>
+            <br>
+            <input type="text" name="gst" id="gst" class="form-data" placeholder="Enter gst number">
+          </div>
+            <div id="error2"></div>
+          <div class="data-group">
+            <label>Buissness Type</label>
+            <br>
+            <input type="text" name="buisness" id="buisness" class="form-data" placeholder="Enter business type">
+          </div>
+            <div id="error3"></div>
+          <div class="data-group">
+            <button type="submit" name="register-btn" class="btn-block">Pay Bill</button>
+          </div>
+          <br>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
+
+<script>
+    var email= sessionStorage.getItem("email");
+    var gstin= sessionStorage.getItem("gstin");
+    if(!email)
+        {
+            window.location.href="login.html";
+        }
+    else
+    {
+        if(!gstin)
+            {
+                window.location.href="account.html";
+            }
+        $(document).on('click','.btn-block',function(event)
+        {
+            info=0;
+            event.preventDefault();
+            var amount      =  $('#amount').val();
+            var gst         =  $('#gst').val();
+            var buisness   =  $('#buisness').val(); 
+            
+            if(amount=="" || amount==null)
+                {
+                    document.getElementById("error1").innerHTML="Enter amount";
+                    $("#error1").fadeOut(2000);
+                    $("#error1").css({"padding-left":"10px","color":"red"});
+                    info=1;
+                }
+            
+            if(gst=="" || gst==null)
+                {
+                    info=1;
+                    document.getElementById("error2").innerHTML="GST number can't be empty";
+                    $("#error2").fadeOut(2000);
+                    $("#error2").css({"padding-left":"10px","color":"red"});
+                }
+            
+            if(buisness=="" || buisness==null)
+                {
+                    info=1;
+                    document.getElementById("error3").innerHTML="Please entre buisness";
+                    $("#error3").fadeOut(2000);
+                    $("#error3").css({"padding-left":"10px","color":"red"});
+                }
+            
+            if(info==0)
+            {
+                sessionStorage.setItem("email",email);
+                
+                if(typeof web3!='undefined')
+                {
+                    web3=new Web3(web3.currentProvider);
+                }
+                else
+                {
+                    web3=new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+                }
+
+                web3.eth.defaultAccount=web3.eth.accounts[0];
+                var bc=web3.eth.contract([
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_email",
+				"type": "string"
+			},
+			{
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"name": "_mobile",
+				"type": "uint256"
+			},
+			{
+				"name": "_gstin",
+				"type": "string"
+			},
+			{
+				"name": "_identity_type",
+				"type": "string"
+			},
+			{
+				"name": "_identity",
+				"type": "string"
+			},
+			{
+				"name": "_business",
+				"type": "string"
+			}
+		],
+		"name": "setAccount",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_bill",
+				"type": "uint256"
+			}
+		],
+		"name": "setBillNo",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_gstin",
+				"type": "string"
+			},
+			{
+				"name": "_billNumber",
+				"type": "string"
+			},
+			{
+				"name": "_amount",
+				"type": "uint256"
+			},
+			{
+				"name": "_business",
+				"type": "string"
+			}
+		],
+		"name": "setDetails",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_email",
+				"type": "string"
+			},
+			{
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"name": "_password",
+				"type": "string"
+			}
+		],
+		"name": "setUser",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_email",
+				"type": "string"
+			}
+		],
+		"name": "getAccount",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_email",
+				"type": "string"
+			},
+			{
+				"name": "_gstin",
+				"type": "string"
+			}
+		],
+		"name": "getAccountExsist",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getBillNo",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_gstin",
+				"type": "string"
+			}
+		],
+		"name": "getDetails",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_email",
+				"type": "string"
+			}
+		],
+		"name": "getEmailExsist",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_email",
+				"type": "string"
+			}
+		],
+		"name": "getProfile",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_email",
+				"type": "string"
+			},
+			{
+				"name": "_password",
+				"type": "string"
+			}
+		],
+		"name": "getUserExsist",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]);
+
+            var c=bc.at("0xD659ADD36bE031701f1f8FF05f4c6b38a4bfC81A");
+            var billno=c.getBillNo()+1;
+            c.setDetails(gst,billno,amount,buisness,{from:web3.eth.accounts[0],gas:1000000});
+            alert("Transaction Successfully Done");
+            window.location.href="payBill.html"; 
+    }
+        });
+    }   
+</script>
